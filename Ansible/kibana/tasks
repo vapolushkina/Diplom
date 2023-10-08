@@ -1,0 +1,25 @@
+---
+# tasks file for roles/kibana
+- name: Create directories for kibana
+  file:
+    path: "/tmp/kibana"
+    state: directory
+- name: Download kibana
+  copy:
+    src: "/etc/ansible/roles/kibana/static/kibana-8.8.2-amd64.deb"
+    dest: /tmp/kibana
+- name: Install kibana
+  apt:
+    deb: "/tmp/kibana/kibana-8.8.2-amd64.deb"
+- name: Copy template
+  copy:
+    src: "/etc/ansible/roles/kibana/templates/kibana.yml"
+    dest: /etc/kibana
+- name: Create directories for ca
+  file:
+    path: "/etc/kibana/certs/"
+    state: directory
+- name: Copy ca
+  copy:
+    src: "/etc/ansible/roles/kibana/static/http_ca.crt"
+    dest: /etc/kibana/certs/
