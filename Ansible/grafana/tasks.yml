@@ -1,0 +1,14 @@
+---
+
+# tasks file for roles/grafana
+- name: Download grafana
+  get_url:
+    url: https://dl.grafana.com/oss/release/grafana_10.0.2_amd64.deb
+    dest: /tmp/
+- name: Install grafana
+  command: "dpkg -i /tmp/grafana_10.0.2_amd64.deb"
+- name: Systemctl grafana  Start
+  systemd:
+    name: grafana-server
+    state: started
+    enabled: yes
