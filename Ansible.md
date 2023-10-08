@@ -52,6 +52,7 @@
    - role: filebeat
 
 ```
+------
 
 ### nginx
 
