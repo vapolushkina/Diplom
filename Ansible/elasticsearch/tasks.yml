@@ -1,0 +1,22 @@
+---
+# tasks file for roles/elastic
+- name: Create User elasticsearch
+  user:
+    name: elastic
+    create_home: no
+    shell: /bin/false
+- name: Create directories for elasticsearch
+  file:
+    path: "/tmp/elasticsearch"
+    state: directory
+- name: Download elasticsearch
+  copy:
+    src: "/etc/ansible/roles/elastic/static/elasticsearch-8.8.2-amd64.deb"
+    dest: /tmp/elasticsearch
+- name: Install java
+  apt:
+    name=default-jre
+    state=latest
+- name: Install elasticsearch
+  apt:
+    deb: "/tmp/elasticsearch/elasticsearch-8.8.2-amd64.deb"
