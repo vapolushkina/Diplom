@@ -1,0 +1,30 @@
+- name: ensure nginx is at the latest version
+  apt: name=nginx state=latest
+  become: yes
+
+- name: start nginx
+  service:
+     name: nginx
+     state: started
+  become: yes
+
+- name: replace nginx.conf
+  template:
+     src=templates/nginx.conf
+     dest=/etc/nginx/nginx.conf
+
+- name: replace default
+  template:
+     src=templates/default
+     dest=/etc/nginx/sites-enabled/default
+
+- name: copy the content of the web site
+  copy:
+    src: /etc/ansible/roles/nginx/static/
+    dest: /var/www/html
+
+- name: restart nginx
+  service:
+     name: nginx
+     state: restarted
+  become: yes
